@@ -1,21 +1,14 @@
-import java.util.UUID;
-
 public class member {
-	private String id;
 	private String name;
 	private String phoneNumber;
 	private String address;
 	
 	public member(String name, String phoneNumber, String address) {
-		this.id = UUID.randomUUID().toString();
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 		this.address = address;
 	}
 	
-	public String getId() {
-		return id;
-	}
 	public String getName() {
 		return name;
 	}
