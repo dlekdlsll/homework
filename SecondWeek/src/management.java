@@ -68,15 +68,15 @@ public class management {
 					
 					sc.nextLine();
 					String key = sc.nextLine();
-					key = "".equals(key)?null:"["+key+"]";
+					key = "".equals(key)?null:key;
 					
 					// 변경할 데이터 입력받기
 					System.out.print("이름을 입력하세요 : ");
-					String name = sc.nextLine();
+					String name = sc.next();
 					System.out.print("전화번호를 입력하세요 (ex) 010-1234-1234 : ");
-					String phoneNumber = sc.nextLine();
-					System.out.print("주소를 입력하세요 : ");
+					String phoneNumber = sc.next();
 					sc.nextLine();
+					System.out.print("주소를 입력하세요 : ");
 					String address = sc.nextLine();
 					
 					// 갱신할 데이터 저장
@@ -179,6 +179,7 @@ public class management {
 	
 	public static void update(String key, String name, String phoneNumber, String address) {
 		Iterator<HashMap<String, Object>> it = set.iterator();
+		HashMap<String, Object> map = new HashMap<String, Object>();
 		try {
 			while (it.hasNext()) {
 				HashMap<String, Object> record = it.next();
@@ -186,15 +187,16 @@ public class management {
 				list.add(name);
 				list.add(phoneNumber);
 				list.add(address);
-				if (record.keySet().toString().equals(key)) {
-					record.replace(key, list);
-					set.add(record);
+				if (record.keySet().toString().equals("["+key+"]")) {
+					set.remove(record);
+					map.put(key, list);
+					set.add(map);
 					System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 				} else {
 					System.out.println("레코드가 수정되지 않았습니다.");
 				}
 			}
-			System.out.print(key+"에 해당하는 레코드가 갱신되었습니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
+			System.out.print("엔터를 누르면 메뉴로 돌아갑니다.\n");
 		} catch (Exception e) {
 			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
 		}
