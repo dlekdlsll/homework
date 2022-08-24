@@ -35,7 +35,7 @@ public class management {
 					System.out.print("검색할 key를 입력하세요 > ");
 					sc.nextLine();
 					String key = sc.nextLine();
-					key = "".equals(key)?null:key;
+					key = "".equals(key)?null:"["+key+"]";
 //					readKey(key);
 					if(sc.nextLine()!=null) {
 						break;
@@ -67,7 +67,7 @@ public class management {
 					
 					sc.nextLine();
 					String key = sc.nextLine();
-					key = "".equals(key)?null:key;
+					key = "".equals(key)?null:"["+key+"]";
 					
 					// 변경할 데이터 입력받기
 					System.out.print("이름을 입력하세요 : ");
@@ -91,7 +91,7 @@ public class management {
 					
 					sc.nextLine();
 					String key = sc.nextLine();
-					key = "".equals(key)?null:key;
+					key = "".equals(key)?null:"["+key+"]";
 					delete(key);
 					break;
 				}
@@ -165,8 +165,9 @@ public class management {
 		Iterator<HashMap<String, Object>> it = set.iterator();
 		while (it.hasNext()) {
 			HashMap<String, Object> record = it.next();
-			if (record.keySet().equals(key)) {
+			if (record.keySet().toString().equals(key)) {
 				set.remove(record);
+				System.out.println("레코드 삭제 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 			}
 		}
 	}
