@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -36,7 +37,7 @@ public class management {
 					sc.nextLine();
 					String key = sc.nextLine();
 					key = "".equals(key)?null:"["+key+"]";
-//					readKey(key);
+					readKey(key);
 					if(sc.nextLine()!=null) {
 						break;
 					};
@@ -79,7 +80,7 @@ public class management {
 					String address = sc.nextLine();
 					
 					// 갱신할 데이터 저장
-//					update(key, name, phoneNumber, address);
+					update(key, name, phoneNumber, address);
 					if(sc.nextLine()!=null) {
 						break;
 					};
@@ -129,19 +130,23 @@ public class management {
 		}
 		System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 	}
-//	
-//	public static void readKey(String key) {
-//		try {
-//			System.out.println("|                  id                  |  name , phoneNumber , address |");
-//			System.out.println("================================================================================");
-//			member value = (member) map.get(key);
-//			System.out.println("| " + key + " |  " + value.getName() + "  |  " + value.getPhoneNumber() + "  |  " + value.getAddress() + "  |");
-//			System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.\n");
-//		} catch (Exception e) {
-//			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
-//		} 
-//	}
-//	
+	
+	public static void readKey(String key) {
+		try {
+			header();
+			Iterator<HashMap<String, Object>> it = set.iterator();
+			while (it.hasNext()) {
+				HashMap<String, Object> record = it.next();
+				if (record.keySet().toString().equals(key)) {
+					System.out.println("| " + record.keySet() + " | " + record.values() + " |");
+				}
+			}
+			System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.\n");
+		} catch (Exception e) {
+			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
+		} 
+	}
+	
 	public static void insert(String name, String phoneNumber, String address) {
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
@@ -171,19 +176,29 @@ public class management {
 			}
 		}
 	}
-//	
-//	public static void update(String key, String name, String phoneNumber, String address) {
-//		try {
-//			member value = (member) map.get(key);
-//			value.setName("".equals(name)?value.getName():name);
-//			value.setPhoneNumber("".equals(phoneNumber)?value.getPhoneNumber():phoneNumber);
-//			value.setAddress("".equals(address)?value.getAddress():address);
-//			map.replace(key, value);
-//			System.out.print(key+"에 해당하는 레코드가 갱신되었습니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
-//		} catch (Exception e) {
-//			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
-//		}
-//	}
+	
+	public static void update(String key, String name, String phoneNumber, String address) {
+		Iterator<HashMap<String, Object>> it = set.iterator();
+		try {
+			while (it.hasNext()) {
+				HashMap<String, Object> record = it.next();
+				List<String> list = new ArrayList<String>();
+				list.add(name);
+				list.add(phoneNumber);
+				list.add(address);
+				if (record.keySet().toString().equals(key)) {
+					record.replace(key, list);
+					set.add(record);
+					System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+				} else {
+					System.out.println("레코드가 수정되지 않았습니다.");
+				}
+			}
+			System.out.print(key+"에 해당하는 레코드가 갱신되었습니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
+		} catch (Exception e) {
+			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
+		}
+	}
 	
 	public static void header() {
 		System.out.println("|                   id                   |   name,   phoneNumber,   address  |");
