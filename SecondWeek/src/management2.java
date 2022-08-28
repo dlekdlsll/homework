@@ -1,8 +1,6 @@
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
@@ -80,7 +78,7 @@ public class management2 {
 					String address = sc.nextLine();
 					
 					// 갱신할 데이터 저장
-//					update(key, name, phoneNumber, address);
+					update(key, name, phoneNumber, address);
 					if(sc.nextLine()!=null) {
 						break;
 					};
@@ -93,7 +91,7 @@ public class management2 {
 					sc.nextLine();
 					String key = sc.nextLine();
 					key = "".equals(key)?null:"["+key+"]";
-//					delete(key);
+					delete(key);
 					break;
 				}
 				case 0: {
@@ -122,7 +120,7 @@ public class management2 {
 	}
 	
 	public static void header() {
-		System.out.println("|                  id                  |  name  |   phoneNumber   |   address   |");
+		System.out.println("|                  id                  |  name  |   phoneNumber   |   address  |");
 		System.out.println("================================================================================");
 	}
 	
