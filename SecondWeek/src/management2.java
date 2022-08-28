@@ -35,7 +35,7 @@ public class management2 {
 					sc.nextLine();
 					String key = sc.nextLine();
 					key = "".equals(key)?null:key;
-//					readKey(key);
+					readKey(key);
 					if(sc.nextLine()!=null) {
 						break;
 					};
