@@ -1,9 +1,11 @@
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 public class management {
 	
@@ -21,7 +23,7 @@ public class management {
 				case 1: {
 					System.out.println();
 					System.out.println("전체 레코드를 조회합니다.");
-					read(set);
+					read();
 					sc.nextLine();	// 버퍼에 남아있는 공백 제거
 					
 					if(sc.nextLine()!=null) {
@@ -151,9 +153,13 @@ public class management {
 //		System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 //	}
 	
-	public static void read(Set<HashMap<String, Object>> set) {
+	public static void read() {
 		header();
-		set.stream().forEach(System.out::println);
+		static Stream<HashMap<String, Object>> stream = set.stream()
+				.map(record -> record.get("key")).forEach(System.out::println);
+		
+		System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		
 	}
 	
 	public static void readKey(String key) {
