@@ -5,6 +5,8 @@ import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class management {
@@ -155,58 +157,52 @@ public class management {
 	
 	public static void read() {
 		header();
-		static Stream<HashMap<String, Object>> stream = set.stream()
-				.map(record -> record.get("key")).forEach(System.out::println);
-		
-		System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		Stream<HashMap<String, Object>> stream = set.stream();
+		try {
+			stream.forEach(record -> System.out.println("| " + record.get("key") + " |  " + record.get("name") + "  |  " + record.get("phoneNumber") + "  |  " + record.get("address") + "  |"));
+			System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		} catch (Exception e) {
+			System.out.println("레코드 조회 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+		}
 		
 	}
 	
 	public static void readKey(String key) {
 		header();
-		Iterator<HashMap<String, Object>> it = set.iterator();
-		while (it.hasNext()) {
-			HashMap<String, Object> record = it.next();
-			if (record.get("key").equals(key)) {
-				System.out.println("| " + record.get("key") + " |  " + record.get("name") + "  |  " + record.get("phoneNumber") + "  |  " + record.get("address") + "  |");
-			}
+		Stream<HashMap<String, Object>> stream = set.stream();
+		try { 
+			stream.filter(record -> record.containsValue(key)).forEach(record -> System.out.println("| " + record.get("key") + " |  " + record.get("name") + "  |  " + record.get("phoneNumber") + "  |  " + record.get("address") + "  |"));
+			System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		} catch (Exception e) {
+			System.out.println("레코드 조회 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
 		}
-		System.out.print("레코드 조회 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 	}
 	
 	public static void update(String key, String name, String phoneNumber, String address) {
-		Iterator<HashMap<String, Object>> it = set.iterator();
+		Stream<HashMap<String, Object>> stream = set.stream();
+		
 		HashMap<String, Object> map = new HashMap<String, Object>();
-		try {
-			while (it.hasNext()) {
-				HashMap<String, Object> record = it.next();
-				map.put("key", key);
-				map.put("name", name);
-				map.put("phoneNumber", phoneNumber);
-				map.put("address", address);
-				set.add(map);
-				if (record.get("key").equals(key)) {
-					set.remove(record);
-					set.add(map);
-					System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
-				} else {
-					System.out.println("레코드가 수정되지 않았습니다.");
-				}
-			}
-			System.out.print("엔터를 누르면 메뉴로 돌아갑니다.\n");
-		} catch (Exception e) {
-			System.out.println("존재하지 않는 key입니다. 엔터를 누르면 메뉴로 돌아갑니다.\n");
-		}
+		map.put("key", key);
+		map.put("name", name);
+		map.put("phoneNumber", phoneNumber);
+		map.put("address", address);
+		
+//		try { 
+			stream.filter(record -> record.containsKey(key)).forEach(record -> record.clear());
+			set.add(map);
+			System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+//		} catch (Exception e) {
+//			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+//		}
 	}
 	
 	public static void delete(String key) {
-		Iterator<HashMap<String, Object>> it = set.iterator();
-		while (it.hasNext()) {
-			HashMap<String, Object> record = it.next();
-			if (record.get("key").equals(key)) {
-				set.remove(record);
-				System.out.println("레코드 삭제 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
-			}
+		try { 
+			Stream<HashMap<String, Object>> stream = set.stream();
+			stream.filter(record -> record.containsKey(key)).forEach(record -> record.clear());
+			System.out.println("레코드 삭제 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		} catch (Exception e) {
+			System.out.println("레코드 삭제 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
 		}
 	}
 }
