@@ -179,7 +179,7 @@ public class management {
 	}
 	
 	public static void update(String key, String name, String phoneNumber, String address) {
-		Stream<HashMap<String, Object>> stream = set.stream();
+		
 		
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("key", key);
@@ -187,19 +187,20 @@ public class management {
 		map.put("phoneNumber", phoneNumber);
 		map.put("address", address);
 		
-//		try { 
-			stream.filter(record -> record.containsKey(key)).forEach(record -> record.clear());
+		try { 
+			Stream<HashMap<String, Object>> stream = set.stream();
+			stream.filter(record -> record.containsKey(key)).collect(toMap(String, Object>::get("key"),get("name"), get("phoneNumber"), get("address")));
 			set.add(map);
 			System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
-//		} catch (Exception e) {
-//			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
-//		}
+		} catch (Exception e) {
+			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+		}
 	}
 	
 	public static void delete(String key) {
 		try { 
 			Stream<HashMap<String, Object>> stream = set.stream();
-			stream.filter(record -> record.containsKey(key)).forEach(record -> record.clear());
+			stream.filter(record -> record.containsKey(key)).forEach(record -> set.remove(record));
 			System.out.println("레코드 삭제 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 		} catch (Exception e) {
 			System.out.println("레코드 삭제 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
