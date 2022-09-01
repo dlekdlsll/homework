@@ -7,7 +7,6 @@ public class washing_up {
 		
 		while (dishes != 0) {
 			try {
-				myTurn(dishes);
 			} catch (Exception e) {
 				
 			}
@@ -23,10 +22,5 @@ public class washing_up {
 		return dishes;
 	}
 	
-	public static void washing(int dishes1) {
-		if (dishes1 == 0) {
-			throw new ~~Exception("더이상 설거지를 할 수 없습니다. 그릇이 없어요.");
-		}
-	}
 
 }
