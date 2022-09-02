@@ -45,6 +45,7 @@ public class management {
 					};
 				}
 				case 3: {
+					// map -> stream(concat) -> map
 					System.out.println();
 					System.out.println("신규 레코드를 추가합니다.");
 					
@@ -88,6 +89,7 @@ public class management {
 					};
 				}
 				case 5: {
+					// removeif
 					System.out.println();
 					System.out.println("key를 기반으로 레코드를 삭제합니다.\n");
 					System.out.print("삭제할 레코드의 key를 입력하세요 > ");
