@@ -96,7 +96,7 @@ public class management {
 					
 					sc.nextLine();
 					String key = sc.nextLine();
-					key = "".equals(key)?null:"["+key+"]";
+					key = "".equals(key)?null:key;
 					delete(key);
 					break;
 				}
@@ -132,19 +132,29 @@ public class management {
 	
 	public static void insert(String name, String phoneNumber, String address) {
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
+		Stream<HashMap<String, Object>> streamMain = set.stream();
 		
-		name = "".equals(name)?null:name;
-		phoneNumber = "".equals(phoneNumber)?null:phoneNumber;
-		address = "".equals(address)?null:address;
-		
-		map.put("key", UUID.randomUUID().toString());
-		map.put("name", name);
-		map.put("phoneNumber", phoneNumber);
-		map.put("address", address);
-		set.add(map);
-		
-		System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+		try { 
+			Stream<HashMap<String, Object>> streamSub = Stream.empty();
+			streamSub.forEach(record -> {
+				record.put("key", UUID.randomUUID().toString());
+				record.put("name", name);
+				record.put("phoneNumber", phoneNumber);
+				record.put("address", address);
+			});
+			
+			streamMain.forEach(record -> System.out.println(record));
+			streamSub.forEach(record -> System.out.println(record));
+			
+			set = Stream.concat(streamMain, streamSub).collect(Collectors.toSet());
+			
+			System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
+			
+			
+		} catch (Exception e) {
+			
+			System.out.println("레코드 저장 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+		}
 	}
 	
 	public static void read() {
@@ -174,15 +184,13 @@ public class management {
 		
 		Stream<HashMap<String, Object>> stream = set.stream();
 		
-		HashMap<String, Object> map = new HashMap<String, Object>();
-		map.put("key", key);
-		map.put("name", name);
-		map.put("phoneNumber", phoneNumber);
-		map.put("address", address);
-		
 		try { 
-			stream.filter(record -> record.containsValue(key)).forEach(record -> set.remove(record));
-			set.add(map);
+			stream.filter(record -> record.containsValue(key)).forEach(record -> {
+				record.put("key", key);
+				record.put("name", name);
+				record.put("phoneNumber", phoneNumber);
+				record.put("address", address);
+			});
 			System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 		} catch (Exception e) {
 			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
@@ -191,8 +199,8 @@ public class management {
 	
 	public static void delete(String key) {
 		try { 
-			Stream<HashMap<String, Object>> stream = set.stream();
-			stream.filter(record -> record.containsValue(key)).forEach(record -> set.remove(record));
+			set.removeIf(record -> record.containsValue(key));
+			
 			System.out.println("레코드 삭제 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 		} catch (Exception e) {
 			System.out.println("레코드 삭제 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
