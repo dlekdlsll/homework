@@ -133,19 +133,16 @@ public class management {
 	public static void insert(String name, String phoneNumber, String address) {
 		
 		Stream<HashMap<String, Object>> streamMain = set.stream();
-		
+		Stream<HashMap<String, Object>> streamSub = Stream.empty();
 		try { 
-			Stream<HashMap<String, Object>> streamSub = Stream.empty();
-			streamSub.forEach(record -> {
-				record.put("key", UUID.randomUUID().toString());
-				record.put("name", name);
-				record.put("phoneNumber", phoneNumber);
-				record.put("address", address);
+			streamSub.map(record -> {
+				HashMap<String, Object> map = new HashMap<String, Object>();
+				map.put("key", UUID.randomUUID().toString());
+				map.put("name", name);
+				map.put("phoneNumber", phoneNumber);
+				map.put("address", address);
 			});
-			
-			streamMain.forEach(record -> System.out.println(record));
-			streamSub.forEach(record -> System.out.println(record));
-			
+		
 			set = Stream.concat(streamMain, streamSub).collect(Collectors.toSet());
 			
 			System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
@@ -154,6 +151,7 @@ public class management {
 		} catch (Exception e) {
 			
 			System.out.println("레코드 저장 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+			System.out.println(e);
 		}
 	}
 	
