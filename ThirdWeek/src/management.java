@@ -1,11 +1,8 @@
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Iterator;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -132,18 +129,19 @@ public class management {
 	
 	public static void insert(String name, String phoneNumber, String address) {
 		
+		
 		Stream<HashMap<String, Object>> streamMain = set.stream();
-		Stream<HashMap<String, Object>> streamSub = Stream.empty();
 		try { 
-			streamSub.map(record -> {
-				HashMap<String, Object> map = new HashMap<String, Object>();
+			Set<HashMap<String, Object>> subSet = new HashSet<HashMap<String, Object>>();
+			subSet.stream().forEach(map -> {
 				map.put("key", UUID.randomUUID().toString());
 				map.put("name", name);
 				map.put("phoneNumber", phoneNumber);
 				map.put("address", address);
 			});
-		
-			set = Stream.concat(streamMain, streamSub).collect(Collectors.toSet());
+			
+			streamMain = Stream.concat(streamMain, subSet.stream());
+			set = streamMain.collect(Collectors.toSet());
 			
 			System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 			
@@ -189,6 +187,7 @@ public class management {
 				record.put("phoneNumber", phoneNumber);
 				record.put("address", address);
 			});
+			set = stream.collect(Collectors.toSet());
 			System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 		} catch (Exception e) {
 			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
