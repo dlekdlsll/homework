@@ -20,7 +20,6 @@ public class management {
 				
 				switch (i) {
 				case 1: {
-					System.out.println();
 					System.out.println("전체 레코드를 조회합니다.");
 					read();
 					sc.nextLine();	// 버퍼에 남아있는 공백 제거
@@ -30,7 +29,6 @@ public class management {
 					};
 				}
 				case 2: {
-					System.out.println();
 					System.out.println("key로 레코드를 조회합니다.");
 					System.out.print("검색할 key를 입력하세요 > ");
 					sc.nextLine();
@@ -43,7 +41,6 @@ public class management {
 				}
 				case 3: {
 					// map -> stream(concat) -> map
-					System.out.println();
 					System.out.println("신규 레코드를 추가합니다.");
 					
 					// 데이터 입력받기
@@ -62,7 +59,6 @@ public class management {
 					};
 				}
 				case 4: {
-					System.out.println();
 					System.out.println("key를 기반으로 레코드를 갱신합니다.\n");
 					System.out.print("수정할 레코드의 key를 입력하세요 > ");
 					
@@ -86,8 +82,6 @@ public class management {
 					};
 				}
 				case 5: {
-					// removeif
-					System.out.println();
 					System.out.println("key를 기반으로 레코드를 삭제합니다.\n");
 					System.out.print("삭제할 레코드의 key를 입력하세요 > ");
 					
@@ -98,12 +92,10 @@ public class management {
 					break;
 				}
 				case 0: {
-					System.out.println();
 					System.out.println("관리 프로그램을 종료합니다.");
 					break;
 				}
 				default:
-					System.out.println();
 					System.out.println("잘못 입력하였습니다. 메뉴로 돌아갑니다.\n");
 				}
 		} while (i != 0);
@@ -120,6 +112,7 @@ public class management {
 		System.out.println("4) key를 기반으로 갱신");
 		System.out.println("5) key를 기반으로 삭제");
 		System.out.print("입력 > ");
+		System.out.println();
 	}
 	
 	public static void header() {
@@ -133,12 +126,8 @@ public class management {
 		Stream<HashMap<String, Object>> streamMain = set.stream();
 		try { 
 			Set<HashMap<String, Object>> subSet = new HashSet<HashMap<String, Object>>();
-			subSet.stream().forEach(map -> {
-				map.put("key", UUID.randomUUID().toString());
-				map.put("name", name);
-				map.put("phoneNumber", phoneNumber);
-				map.put("address", address);
-			});
+			HashMap<String, Object> map = new HashMap<String, Object>();
+			
 			
 			streamMain = Stream.concat(streamMain, subSet.stream());
 			set = streamMain.collect(Collectors.toSet());
