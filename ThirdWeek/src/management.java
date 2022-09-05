@@ -127,8 +127,11 @@ public class management {
 		try { 
 			Set<HashMap<String, Object>> subSet = new HashSet<HashMap<String, Object>>();
 			HashMap<String, Object> map = new HashMap<String, Object>();
-			
-			
+			map.put("key", UUID.randomUUID().toString());
+			map.put("name", name);
+			map.put("phoneNumber", phoneNumber);
+			map.put("address", address);
+			subSet.add(map);
 			streamMain = Stream.concat(streamMain, subSet.stream());
 			set = streamMain.collect(Collectors.toSet());
 			
@@ -176,10 +179,10 @@ public class management {
 				record.put("phoneNumber", phoneNumber);
 				record.put("address", address);
 			});
-			set = stream.collect(Collectors.toSet());
 			System.out.println("레코드 수정 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 		} catch (Exception e) {
 			System.out.println("레코드 수정 실패. 엔터를 누르면 메뉴로 돌아갑니다.");
+			System.out.println(e);
 		}
 	}
 	
