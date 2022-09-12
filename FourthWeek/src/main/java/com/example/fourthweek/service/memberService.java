@@ -1,5 +1,6 @@
 package com.example.fourthweek.service;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,7 +18,7 @@ public class memberService {
 	@Autowired
 	private MemberRepository memberRepository;
 	
-	public void register(Member member) {
+	public void save(Member member) {
 		memberRepository.save(member);
 	}
 	

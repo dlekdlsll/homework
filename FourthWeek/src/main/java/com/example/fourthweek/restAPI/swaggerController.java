@@ -1,6 +1,5 @@
 package com.example.fourthweek.restAPI;
 
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -28,7 +27,7 @@ public class swaggerController {
 	public ResponseEntity<?> registerMember(@RequestBody Member member) {
 		try {
 			if(member != null) {
-				service.register(member);
+				service.save(member);
 				entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
 			}else {
 				entity = new ResponseEntity<String>("NO DATA", HttpStatus.BAD_REQUEST);
