@@ -1,5 +1,6 @@
 package com.example.fourthweek2.restapi;
 
+import com.example.fourthweek2.repository.memberRepository;
 import com.example.fourthweek2.service.memberService;
 import com.example.fourthweek2.store.Member;
 import io.swagger.annotations.ApiOperation;
@@ -12,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController
 @RequiredArgsConstructor
+@RestController
 @RequestMapping("/api")
 public class apiController {
     ResponseEntity<?> entity = null;
 
-    private final memberService service;
+    private final memberRepository service;
 
     @ApiOperation(value="회원 등록", notes="회원 등록")
     @GetMapping(value="/register")
