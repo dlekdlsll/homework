@@ -122,18 +122,17 @@ public class management {
 	
 	public static void insert(String name, String phoneNumber, String address) {
 		
-		
-		Stream<HashMap<String, Object>> streamMain = set.stream();
 		try { 
-			Set<HashMap<String, Object>> subSet = new HashSet<HashMap<String, Object>>();
 			HashMap<String, Object> map = new HashMap<String, Object>();
 			map.put("key", UUID.randomUUID().toString());
 			map.put("name", name);
 			map.put("phoneNumber", phoneNumber);
 			map.put("address", address);
-			subSet.add(map);
-			streamMain = Stream.concat(streamMain, subSet.stream());
-			set = streamMain.collect(Collectors.toSet());
+			set = Stream.<HashMap<String, Object>>builder().add(map).build().collect(Collectors.toSet());
+			
+//			subSet.add(map);
+//			streamMain = Stream.concat(streamMain, subSet.stream());
+//			set = streamMain.collect(Collectors.toSet()); 					// Wow.....
 			
 			System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 			
