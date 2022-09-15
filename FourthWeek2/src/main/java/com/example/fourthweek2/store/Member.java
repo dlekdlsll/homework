@@ -1,34 +1,34 @@
 package com.example.fourthweek2.store;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.UUID;
 
-@Data
+@Getter
+@NoArgsConstructor
 @Entity
 @Table(name="member")
-public class Member implements Serializable {
-    private static final long serialVersionUID = 810457109758530244L;
+public class Member{
+    @EmbeddedId
+    private MemberId id;
 
-    @Id
-    @Column(name="id")
-    private String id;
-
-    @Id
-    @Column(name="date")
-    private Date date;
-
-    @Column(name="name")
+    @Column(name = "name")
     private String name;
 
-    @Column(name="address")
+    @Column(name = "address")
     private String address;
 
-    @Column(name="phoneNumber")
+    @Column(name = "phoneNumber")
     private String phoneNumber;
+
+    @Builder
+    public Member(String name, String phoneNumber, String address) {
+        this.id = (new MemberId()) ;
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
 }
