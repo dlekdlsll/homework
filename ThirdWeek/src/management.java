@@ -3,6 +3,7 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -128,11 +129,11 @@ public class management {
 			map.put("name", name);
 			map.put("phoneNumber", phoneNumber);
 			map.put("address", address);
-			set = Stream.<HashMap<String, Object>>builder().add(map).build().collect(Collectors.toSet());
+			set = Stream.concat(set.stream(), Stream.<HashMap<String, Object>>builder().add(map).build()).collect(Collectors.toSet());
 			
 //			subSet.add(map);
 //			streamMain = Stream.concat(streamMain, subSet.stream());
-//			set = streamMain.collect(Collectors.toSet()); 					// Wow.....
+//			set = streamMain.collect(Collectors.toSet()); 		
 			
 			System.out.print("레코드 저장 완료. 엔터를 누르면 메뉴로 돌아갑니다.");
 			
