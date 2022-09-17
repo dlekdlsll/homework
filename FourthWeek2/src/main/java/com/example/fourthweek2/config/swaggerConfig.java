@@ -2,56 +2,31 @@ package com.example.fourthweek2.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
-import springfox.documentation.swagger2.annotations.EnableSwagger2;
-
-import java.util.HashSet;
-import java.util.Set;
 
 @Configuration
-@EnableSwagger2
-public class swaggerConfig implements WebMvcConfigurer {
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder()
-                .title("Demo")
-                .description("API EXAMPLE")
-                .version("1.0")
-                .build();
-    }
-
-    private Set<String> getConsumeContentTypes() {
-        Set<String> consumes = new HashSet<>();
-        consumes.add("application/json;charset=UTF-8");
-        consumes.add("application/x-www-form-urlencoded");
-        return consumes;
-    }
-
-    private Set<String> getProduceContentTypes() {
-        Set<String> produces = new HashSet<>();
-        produces.add("application/json;charset=UTF-8");
-        return produces;
-    }
-    @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("swagger-ui.html")
-                .addResourceLocations("classpath:/META-INF/resources/");
-        registry.addResourceHandler("/webjars/**")
-                .addResourceLocations("classpath:/META-INF/resources/webjars/");
-    }
-
+public class swaggerConfig {
     @Bean
-    public Docket commonApi() {
+    public Docket api(){
         return new Docket(DocumentationType.SWAGGER_2)
                 .select()
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
+                .build().apiInfo(apiInfo());
+
+    }
+
+    private ApiInfo apiInfo() {
+        String description = "Welcome My Swagger";
+        return new ApiInfoBuilder()
+                .title("SWAGGER PRACTICE")
+                .description(description)
+                .version("1.0")
                 .build();
     }
 

@@ -13,7 +13,7 @@ import java.util.UUID;
 @Table(name="member")
 public class Member{
     @EmbeddedId
-    private MemberId id;
+    private MemberId id = new MemberId();
 
     @Column(name = "name")
     private String name;
@@ -26,7 +26,6 @@ public class Member{
 
     @Builder
     public Member(String name, String phoneNumber, String address) {
-        this.id = (new MemberId()) ;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;

@@ -4,10 +4,10 @@ import org.springframework.stereotype.Service;
 
 
 @Service
-public abstract class MemberService implements MemberRepo{
-    private final MemberRepo service;
+public class MemberService {private MemberRepo memberRepo;
 
     protected MemberService(MemberRepo memberRepo) {
-        this.service = memberRepo;
+        this.memberRepo = memberRepo;
     }
+
 }
