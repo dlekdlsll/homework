@@ -23,6 +23,5 @@ public class MemberId implements Serializable {
         String strId = UUID.randomUUID().toString();
         this.id = strId;
         this.regdate = String.format("%tF", now);
-        return;
     }
 }
