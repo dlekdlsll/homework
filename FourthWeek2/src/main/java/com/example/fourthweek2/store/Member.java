@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 @Getter
+@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="member")
@@ -27,8 +28,6 @@ public class Member{
 
     @Builder
     public Member(String name, String phoneNumber, String address) {
-        MemberId memberId = new MemberId();
-        this.id = memberId;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;

@@ -2,6 +2,8 @@ package com.example.fourthweek2.restapi;
 
 import com.example.fourthweek2.service.MemberRepo;
 import com.example.fourthweek2.store.Member;
+import com.example.fourthweek2.store.MemberData;
+import com.example.fourthweek2.store.MemberId;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -17,16 +19,17 @@ public class apiController {
 
     ResponseEntity<?> entity = null;
 
-    @GetMapping(value="/hello")
-    public String hello1() {
-        return "hello";
-    }
-
     @ApiOperation(value="회원 등록", notes="회원 등록")
     @PostMapping(value="/register")
-    public ResponseEntity<?> registerMember(@RequestBody Member member) {
+    public ResponseEntity<?> registerMember(@RequestBody MemberData data) {
         try {
-            if(member != null) {
+            if(data != null) {
+                MemberId memberId = new MemberId();
+                Member member = new Member();
+                member.setId(memberId);
+                member.setName(data.getName());
+                member.setAddress(data.getAddress());
+                member.setPhoneNumber(data.getPhoneNumber());
                 service.save(member);
                 entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
             }else {
@@ -41,10 +44,11 @@ public class apiController {
 
     @ApiOperation(value="회원 내역", notes="회원 내역")
     @GetMapping(value = "/read")
-    public ResponseEntity<?> readMember() {
+    public Member readMember() {
+        Member member = null;
         try {
             if (service.findAll().size() != 0) {
-                service.findAll();
+                member = (Member) service.findAll();
                 entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
             } else {
                 entity = new ResponseEntity<String>("NO DATA", HttpStatus.BAD_REQUEST);
@@ -53,6 +57,6 @@ public class apiController {
             e.printStackTrace();
             entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return entity;
+        return member;
     }
 }
