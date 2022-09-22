@@ -3,9 +3,6 @@ package com.example.fourthweek2.store;
 import lombok.*;
 
 import javax.persistence.*;
-import java.io.Serializable;
-import java.util.Date;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -28,6 +25,7 @@ public class Member{
 
     @Builder
     public Member(String name, String phoneNumber, String address) {
+        this.id = new MemberId();
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
