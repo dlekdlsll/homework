@@ -22,4 +22,9 @@ public class MemberId implements Serializable {
         this.id = strId;
         this.regdate = now2;
     }
+
+    public MemberId(String id, String regdate) {
+        this.id = id;
+        this.regdate = regdate;
+    }
 }

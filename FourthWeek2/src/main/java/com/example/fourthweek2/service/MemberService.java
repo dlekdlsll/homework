@@ -1,7 +1,5 @@
 package com.example.fourthweek2.service;
 
-import com.example.fourthweek2.store.Member;
-import com.example.fourthweek2.store.MemberId;
 import org.springframework.stereotype.Service;
 
 
@@ -12,5 +10,6 @@ public class MemberService {
     public MemberService(MemberRepo memberRepo) {
         this.memberRepo = memberRepo;
     }
+
 
 }

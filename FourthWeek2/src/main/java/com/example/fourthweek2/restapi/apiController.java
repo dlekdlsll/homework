@@ -2,7 +2,6 @@ package com.example.fourthweek2.restapi;
 
 import com.example.fourthweek2.service.MemberRepo;
 import com.example.fourthweek2.store.Member;
-import com.example.fourthweek2.store.MemberId;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

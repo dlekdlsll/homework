@@ -5,7 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 
 @Getter
-@Setter
 @NoArgsConstructor
 @Entity
 @Table(name="member")
@@ -26,6 +25,14 @@ public class Member{
     @Builder
     public Member(String name, String phoneNumber, String address) {
         this.id = new MemberId();
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.address = address;
+    }
+
+    @Builder
+    public Member(MemberId id, String name, String phoneNumber, String address) {
+        this.id = id;
         this.name = name;
         this.phoneNumber = phoneNumber;
         this.address = address;
