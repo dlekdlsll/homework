@@ -1,15 +1,14 @@
 package com.example.fourthweek2.restapi;
 
+import com.example.fourthweek2.service.CreateService;
 import com.example.fourthweek2.service.MemberRepo;
 import com.example.fourthweek2.store.Member;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @RestController
@@ -17,61 +16,60 @@ import java.util.stream.Collectors;
 public class apiController {
 
     private final MemberRepo service;
+    private final CreateService createService;
 
     ResponseEntity<?> entity = null;
 
     @ApiOperation(value="회원 등록", notes="회원 등록")
     @PostMapping(value="/register")
-    public ResponseEntity<?> registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
+    public Member registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
         try {
-            if(name != null & phoneNumber != null & address != null) {
-                Member member = new Member(name, phoneNumber, address);
-                service.save(member);
-                entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-            }else {
-                entity = new ResponseEntity<String>("NO DATA", HttpStatus.BAD_REQUEST);
-            }
+            service.save(createService.member(name, phoneNumber, address));
         }catch (Exception e) {
             e.printStackTrace();
-            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
         }
-        return entity;
+        return createService.member(name, phoneNumber, address);
     }
 
     @ApiOperation(value="회원 내역", notes="회원 내역")
     @GetMapping(value = "/read")
     public List<Member> readMember() {
         try {
-            if (service.findAll().size() != 0) {
-                entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-            } else {
-                entity = new ResponseEntity<String>("NO DATA", HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
+            return service.findAll();
+        }catch (Exception e) {
             e.printStackTrace();
-            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return null;
         }
-        return service.findAll();
     }
 
     @ApiOperation(value="회원 내역 Key로 검색", notes="회원 내역 Key로 검색")
     @GetMapping(value = "/readKey")
-    public Member readMemberByKey(@RequestParam(required = false) String uid, @RequestParam(required = false) String regdate) {
-        List<Member> list = service.findAll();
-        list = list.stream().filter(record -> record.getId().getId() == uid || record.getId().getRegdate() == regdate).distinct().collect(Collectors.toList());
-        Member member = null;
+    public Member readMemberByKey(@RequestParam String id, @RequestParam String regdate) {
         try {
-            if (uid != null || regdate != null) {
-                member = (Member) list.stream().filter(record -> record.getId().getId() == uid || record.getId().getRegdate() == regdate);
-                entity = new ResponseEntity<String>("SUCCESS", HttpStatus.OK);
-            } else {
-                entity = new ResponseEntity<String>("NO DATA", HttpStatus.BAD_REQUEST);
-            }
-        } catch (Exception e) {
+            return service.findById(createService.memberId(id, regdate)).get();
+        }catch (Exception e) {
             e.printStackTrace();
-            entity = new ResponseEntity<String>(e.getMessage(), HttpStatus.BAD_REQUEST);
+            return null;
         }
-        return member;
+    }
 
+    @ApiOperation(value="회원 내역 Key로 삭제", notes="회원 내역 Key로 삭제")
+    @DeleteMapping(value = "/deleteKey")
+    public void deleteMemberByKey(@RequestParam String id, @RequestParam String regdate) {
+        try {
+            service.deleteById(createService.memberId(id, regdate));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    @ApiOperation(value="회원 내역 Key로 수정", notes="회원 내역 Key로 수정")
+    @PutMapping(value = "/updateKey")
+    public void updateMemberByKey(@RequestParam String id, @RequestParam String regdate, @RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
+        try {
+            service.save(createService.member2(createService.memberId(id, regdate), name, phoneNumber, address));
+        }catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

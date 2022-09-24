@@ -10,6 +10,4 @@ public class MemberService {
     public MemberService(MemberRepo memberRepo) {
         this.memberRepo = memberRepo;
     }
-
-
 }

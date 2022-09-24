@@ -1,5 +1,6 @@
 package com.example.fourthweek2.store;
 
+import lombok.Data;
 import lombok.Getter;
 
 import javax.persistence.Column;
@@ -7,7 +8,7 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
-@Getter
+@Data
 public class MemberId implements Serializable {
     @Column(name = "id")
     private String id;
