@@ -4,25 +4,24 @@ import lombok.*;
 
 import javax.persistence.*;
 
-@Getter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name="member")
 public class Member{
 
     @EmbeddedId
-    private MemberId id;
+    MemberId id;
 
     @Column(name = "name")
-    private String name;
+    String name;
 
     @Column(name = "address")
-    private String address;
+    String address;
 
     @Column(name = "phoneNumber")
-    private String phoneNumber;
+    String phoneNumber;
 
-    @Builder
     public Member(String name, String phoneNumber, String address) {
         this.id = new MemberId();
         this.name = name;
@@ -30,7 +29,6 @@ public class Member{
         this.address = address;
     }
 
-    @Builder
     public Member(MemberId id, String name, String phoneNumber, String address) {
         this.id = id;
         this.name = name;

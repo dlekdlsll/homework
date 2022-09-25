@@ -1,20 +1,21 @@
 package com.example.fourthweek2.store;
 
 import lombok.Data;
-import lombok.Getter;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.UUID;
 
+@Embeddable
 @Data
 public class MemberId implements Serializable {
     @Column(name = "id")
-    private String id;
+    String id;
 
     @Column(name = "regdate")
-    private String regdate;
+    String regdate;
 
     public MemberId() {
         Date now = new Date();

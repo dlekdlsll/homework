@@ -45,12 +45,13 @@ public class apiController {
     @ApiOperation(value="회원 내역 Key로 검색", notes="회원 내역 Key로 검색")
     @GetMapping(value = "/readKey")
     public Member readMemberByKey(@RequestParam String id, @RequestParam String regdate) {
+        Member member = null;
         try {
-            return service.findById(createService.memberId(id, regdate)).get();
-        }catch (Exception e) {
+            member =  service.findById(createService.memberId(id, regdate)).get();
+        } catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return member;
     }
 
     @ApiOperation(value="회원 내역 Key로 삭제", notes="회원 내역 Key로 삭제")
