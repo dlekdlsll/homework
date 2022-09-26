@@ -7,7 +7,7 @@ public class doubleNewDouble {
 		long startTime = System.nanoTime();
 		Double.parseDouble("10");
 		long endTime = System.nanoTime();
-		System.out.println(String.format("코드 실행 시간: %20dms", endTime - startTime));
+		System.out.println(String.format("코드 실행 시간: %20dns", endTime - startTime));
 		
 		startTime = System.nanoTime();
 		new Double("10");
