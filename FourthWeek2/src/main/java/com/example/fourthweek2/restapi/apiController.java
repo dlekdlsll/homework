@@ -2,6 +2,7 @@ package com.example.fourthweek2.restapi;
 
 import com.example.fourthweek2.service.CreateService;
 import com.example.fourthweek2.service.MemberRepo;
+import com.example.fourthweek2.service.MemberService;
 import com.example.fourthweek2.store.Member;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,7 @@ import java.util.List;
 @RequestMapping("/api")
 public class apiController {
 
-    private final MemberRepo service;
+    private final MemberService service;
     private final CreateService createService;
 
     ResponseEntity<?> entity = null;
@@ -49,7 +50,7 @@ public class apiController {
     public Member readMemberByKey(@RequestParam String id, @RequestParam String regdate) {
         Member member = null;
         try {
-            member =  service.findById(createService.memberId(id, regdate)).get();
+            member = service.findById(createService.memberId(id, regdate));
         } catch (Exception e) {
             e.printStackTrace();
         }

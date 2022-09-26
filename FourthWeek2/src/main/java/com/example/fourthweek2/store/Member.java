@@ -35,4 +35,5 @@ public class Member{
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
+
 }
