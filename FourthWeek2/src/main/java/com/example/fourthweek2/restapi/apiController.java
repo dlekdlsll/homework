@@ -22,11 +22,13 @@ public class apiController {
 
     @ApiOperation(value="회원 등록", notes="회원 등록")
     @PostMapping(value="/register")
-    public Member registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
+    public Object registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
         try {
             service.save(createService.member(name, phoneNumber, address));
+            return createService.member(name, phoneNumber, address);
         }catch (Exception e) {
-            e.printStackTrace();
+//            entity.e.printStackTrace();
+//            return e.printStackTrace();
         }
         return createService.member(name, phoneNumber, address);
     }
