@@ -16,9 +16,9 @@ public class MemberService{
     }
 
     public void save(Member member) {
-        if (memberRepo.findAll().stream().filter(r -> r.getPhoneNumber() == member.getPhoneNumber())) {
+//        if (memberRepo.findAll().stream().filter(r -> r.getPhoneNumber() == member.getPhoneNumber())) {
 
-        }
+//        }
         memberRepo.save(member);
     }
 
