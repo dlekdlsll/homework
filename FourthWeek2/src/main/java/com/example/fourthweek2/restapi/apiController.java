@@ -2,12 +2,13 @@ package com.example.fourthweek2.restapi;
 
 import com.example.fourthweek2.service.CreateService;
 import com.example.fourthweek2.service.MemberRepo;
-import com.example.fourthweek2.service.MemberService;
 import com.example.fourthweek2.store.Member;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
 
@@ -16,20 +17,21 @@ import java.util.List;
 @RequestMapping("/api")
 public class apiController {
 
-    private final MemberService service;
+    private final MemberRepo service;
     private final CreateService createService;
 
     ResponseEntity<?> entity = null;
 
     @ApiOperation(value="회원 등록", notes="회원 등록")
     @PostMapping(value="/register")
-    public Object registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
+    public Member registerMember(@RequestParam String name, @RequestParam String phoneNumber, @RequestParam String address) {
+        name = HtmlUtils.htmlEscape(name);
+        phoneNumber = HtmlUtils.htmlEscape(phoneNumber);
+        address = HtmlUtils.htmlEscape(address);
         try {
             service.save(createService.member(name, phoneNumber, address));
-            return createService.member(name, phoneNumber, address);
         }catch (Exception e) {
-//            entity.e.printStackTrace();
-//            return e.printStackTrace();
+            e.printStackTrace();
         }
         return createService.member(name, phoneNumber, address);
     }
@@ -50,7 +52,7 @@ public class apiController {
     public Member readMemberByKey(@RequestParam String id, @RequestParam String regdate) {
         Member member = null;
         try {
-            member = service.findById(createService.memberId(id, regdate));
+            member =  service.findById(createService.memberId(id, regdate)).get();
         } catch (Exception e) {
             e.printStackTrace();
         }

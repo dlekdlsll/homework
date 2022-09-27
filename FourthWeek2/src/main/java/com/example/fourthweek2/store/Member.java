@@ -19,7 +19,7 @@ public class Member{
     @Column(name = "address")
     String address;
 
-    @Column(name = "phoneNumber")
+    @Column(name = "phoneNumber", unique = true)
     String phoneNumber;
 
     public Member(String name, String phoneNumber, String address) {
@@ -35,5 +35,4 @@ public class Member{
         this.phoneNumber = phoneNumber;
         this.address = address;
     }
-
 }
