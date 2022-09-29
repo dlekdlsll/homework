@@ -5,12 +5,12 @@ import com.example.fourthweek2.service.MemberRepo;
 import com.example.fourthweek2.store.Member;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringEscapeUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.HtmlUtils;
 
 import java.util.List;
+
 
 @RequiredArgsConstructor
 @RestController
@@ -33,14 +33,20 @@ public class apiController {
         }catch (Exception e) {
             e.printStackTrace();
         }
-        return createService.member(name, phoneNumber, address);
+        return createService.member(HtmlUtils.htmlUnescape(name), HtmlUtils.htmlUnescape(phoneNumber), HtmlUtils.htmlUnescape(address));
     }
 
     @ApiOperation(value="회원 내역", notes="회원 내역")
     @GetMapping(value = "/read")
     public List<Member> readMember() {
         try {
-            return service.findAll();
+            List<Member> list = service.findAll();
+            list.stream().forEach(r -> {
+                r.setPhoneNumber(HtmlUtils.htmlUnescape(r.getPhoneNumber()));
+                r.setName(HtmlUtils.htmlUnescape(r.getName()));
+                r.setAddress(HtmlUtils.htmlUnescape(r.getAddress()));
+            });
+            return list;
         }catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -55,6 +61,11 @@ public class apiController {
         Member member = null;
         try {
             member =  service.findById(createService.memberId(id, regdate)).get();
+            member.setId(createService.memberId(HtmlUtils.htmlUnescape(id), HtmlUtils.htmlUnescape(regdate)));
+            member.setAddress(HtmlUtils.htmlUnescape(member.getAddress()));
+            member.setName(HtmlUtils.htmlUnescape(member.getName()));
+            member.setPhoneNumber(HtmlUtils.htmlUnescape(member.getPhoneNumber()));
+
         } catch (Exception e) {
             e.printStackTrace();
         }
